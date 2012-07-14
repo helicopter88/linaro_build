@@ -86,4 +86,11 @@ GRANDFATHERED_ALL_PREBUILT := \
 	ueventd.olympus.rc \
 	ueventd.stingray.rc \
 	vold.fstab \
-	wl1271.bin
+	wl1271.bin \
+	zoneinfo.dat \
+	zoneinfo.idx \
+	zoneinfo.version \
+ifeq($(TARGET_BOOTLOADER_TYPE),uboot)
+	build-uboot \
+	build-mkenvimg
+endif
