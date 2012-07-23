@@ -1763,7 +1763,7 @@ endef
 define copy-xml-file-checked
 $(2): $(1) | $(ACP)
 	@echo "Copy xml: $$@"
-	$(hide) xmllint $$< >/dev/null  # Don't print the xml file to stdout.
+	$(hide) if which xmllint &>/dev/null; then xmllint $$< >/dev/null; fi  # Don't print the xml file to stdout.
 	$$(copy-file-to-target)
 endef
 
