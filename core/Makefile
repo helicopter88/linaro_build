@@ -380,7 +380,7 @@ INTERNAL_RAMDISK_FILES := $(filter $(TARGET_ROOT_OUT)/%, \
 ifeq ($(TARGET_BOOTLOADER_TYPE),uboot)
 BUILT_RAMDISK_TARGET := $(PRODUCT_OUT)/uInitrd
 else
-BUILT_RAMDISK_TARGET := $(PRODUCT_OUT)/ramdisk.img
+BUILT_RAMDISK_TARGET := $(PRODUCT_OUT)/$(or $(INSTALLED_RAMDISK_TARGET_NAME),ramdisk.img)
 endif
 
 # We just build this directly to the install location.
