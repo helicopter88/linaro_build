@@ -24,6 +24,10 @@ else
   INSTALLED_KERNEL_TARGET :=
 endif
 
+ifeq ($(strip $(TARGET_HAS_DEVICETREE)),true)
+  INSTALLED_DTB_TARGET :=  $(PRODUCT_OUT)/boot/$(or $(INSTALLED_DTB_TARGET_NAME),board.dtb)
+endif
+
 -include $(TARGET_DEVICE_DIR)/AndroidBoard.mk
 
 # Generate a file that contains various information about the

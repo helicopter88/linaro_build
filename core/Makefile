@@ -405,6 +405,7 @@ ifneq ($(strip $(TARGET_NO_KERNEL)),true)
 # the boot image, which is a collection of other images.
 INTERNAL_BOOTIMAGE_ARGS := \
 	$(addprefix --second ,$(INSTALLED_2NDBOOTLOADER_TARGET)) \
+	$(addprefix --dt ,$(INSTALLED_DTB_TARGET)) \
 	--kernel $(INSTALLED_KERNEL_TARGET) \
 	--ramdisk $(INSTALLED_RAMDISK_TARGET)
 
@@ -418,6 +419,11 @@ endif
 BOARD_KERNEL_BASE := $(strip $(BOARD_KERNEL_BASE))
 ifdef BOARD_KERNEL_BASE
   INTERNAL_BOOTIMAGE_ARGS += --base $(BOARD_KERNEL_BASE)
+endif
+
+TARGET_TAG_ADDRESS := $(strip $(TARGET_TAG_ADDRESS))
+ifdef TARGET_TAG_ADDRESS
+  INTERNAL_BOOTIMAGE_ARGS += --tags-addr $(TARGET_TAG_ADDRESS)
 endif
 
 BOARD_KERNEL_PAGESIZE := $(strip $(BOARD_KERNEL_PAGESIZE))
