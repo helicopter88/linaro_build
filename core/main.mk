@@ -601,6 +601,10 @@ ifdef FULL_BUILD
     $(foreach p,$(product_FILES),$(info :   $(p)))
     $(error done)
   endif
+  ifneq ($(TARGET_BOOTLOADER_TYPE),fastboot)
+  # We need (host) fs_get_stats for the boottarball target
+  subdirs += build/tools/fs_get_stats
+  endif
 else
   # We're not doing a full build, and are probably only including
   # a subset of the module makefiles.  Don't try to build any modules
