@@ -89,7 +89,6 @@ FRAMEWORKS_BASE_SUBDIRS := \
 	    sax \
 	    telephony \
 	    wifi \
-	    ethernet \
 	    keystore \
 	 )
 
