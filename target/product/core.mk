@@ -78,8 +78,8 @@ PRODUCT_PACKAGES += \
     aib \
     aibd \
     busybox \
-    lrzsz \
-    wpa_supplicant.conf
+    rz \
+    sz
 
 # host-only dependencies
 ifeq ($(WITH_HOST_DALVIK),true)
