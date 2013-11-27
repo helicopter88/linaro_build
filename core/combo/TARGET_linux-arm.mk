@@ -35,7 +35,7 @@ TARGET_ARCH_VARIANT := armv5te
 endif
 
 ifeq ($(strip $(TARGET_GCC_VERSION_EXP)),)
-TARGET_GCC_VERSION := 4.7
+TARGET_GCC_VERSION := 4.7-linaro
 else
 TARGET_GCC_VERSION := $(TARGET_GCC_VERSION_EXP)
 endif
@@ -76,10 +76,7 @@ TARGET_arm_CFLAGS :=    -O3 \
 # Modules can choose to compile some source as thumb.
 TARGET_thumb_CFLAGS :=  -mthumb \
                         -O3 \
-                        -fomit-frame-pointer \
-			-fstrict-aliasing \
-			-Wstrict-aliasing=2 \
-			-Werror=strict-aliasing
+                        -fomit-frame-pointer
 
 # Turn off strict-aliasing if we're building an AOSP variant without the
 # patchset...
@@ -107,6 +104,12 @@ android_config_h := $(call select-android-config-h,linux-arm)
 TARGET_GLOBAL_CFLAGS += \
 			-msoft-float -fpic -fPIE \
 			-ffunction-sections \
+			-fstrict-aliasing \
+			-Wstrict-aliasing=2 \
+			-Werror=strict-aliasing \
+			-Wno-unused-but-set-variable \
+			-fno-builtin-sin \
+			-fno-strict-volatile-bitfields \
 			-fdata-sections \
 			-funwind-tables \
 			-fstack-protector \
@@ -117,15 +120,6 @@ TARGET_GLOBAL_CFLAGS += \
 			$(arch_variant_cflags) \
 			-include $(android_config_h) \
 			-I $(dir $(android_config_h))
-
-# This warning causes dalvik not to build with gcc 4.6+ and -Werror.
-# We cannot turn it off blindly since the option is not available
-# in gcc-4.4.x.  We also want to disable sincos optimization globally
-# by turning off the builtin sin function.
-ifneq ($(filter 4.6 4.6.% 4.7 4.7.%, $(TARGET_GCC_VERSION)),)
-TARGET_GLOBAL_CFLAGS += -Wno-unused-but-set-variable -fno-builtin-sin \
-			-fno-strict-volatile-bitfields
-endif
 
 # This is to avoid the dreaded warning compiler message:
 #   note: the mangling of 'va_list' has changed in GCC 4.4
@@ -154,8 +148,8 @@ TARGET_GLOBAL_CPPFLAGS += -fvisibility-inlines-hidden
 TARGET_RELEASE_CFLAGS += \
 			-DNDEBUG \
 			-g \
-			-Wstrict-aliasing=2 \
-			-Werror=strict-aliasing \
+			-fgcse-las \
+			-fgcse-sm \
 			-fgcse-after-reload \
 			-frerun-cse-after-loop \
 			-frename-registers
