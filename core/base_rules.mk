@@ -20,6 +20,8 @@ ifdef base-rules-hook
 $(if $(base-rules-hook),)
 endif
 
+$($cherries pick from tree)
+
 ###########################################################
 ## Common instructions for a generic module.
 ###########################################################
